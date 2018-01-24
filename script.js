@@ -1,3 +1,5 @@
+// Response payload. Show in console.log -- function sendData()
+// file results.png show: Example of verity results request
 var data = {};
 function makeRequest (method, url) {
     return new Promise(function (resolve, reject) {
