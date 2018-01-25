@@ -28,6 +28,7 @@ makeRequest('GET', 'https://www.eliftech.com/school-task')
     .then(function (datums) {
         console.log(datums);
         var inputData = JSON.parse(datums);
+        console.log(inputData);
         self.data.id = inputData.id;
         var newExp = [];
         for(var i=0; i<inputData.expressions.length; i++){
@@ -48,6 +49,7 @@ function sendData() {
         id: this.data.id,
         results: this.data.expressions
     };
+    // console.log(outputData);
     outputData = JSON.stringify(outputData);
     xhttp.send(outputData);
     setTimeout(function () {
@@ -68,7 +70,7 @@ function calculate(res) {
                     a.splice(i-2,3,"42");
                     return result(a);
                 }else if(a[i-1]!= 0){
-                    a.splice(i-2,3, String(Math.round(+a[i-2] / +a[i-1])));
+                    a.splice(i-2,3, String(Math.floor(+a[i-2] / +a[i-1])));
                     return result(a);
                 }
             }else if(a[i] === "+"){
@@ -82,7 +84,7 @@ function calculate(res) {
                     a.splice(i-2,3,"42");
                     return result(a);
                 }else if(a[i-1] != 0){
-                    a.splice(i-2,3, String(+a[i-2] % +a[i-1]));
+                    a.splice(i-2,3, String(Math.floor(+a[i-2] % +a[i-1])));
                     return result(a);
                 }
             }
