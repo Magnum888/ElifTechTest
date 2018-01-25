@@ -1,6 +1,7 @@
 // Response payload. Show in console.log -- function sendData()
 // file results.png show: Example of verity results request
 var data = {};
+document.querySelector('button').addEventListener('click', start);
 function makeRequest (method, url) {
     return new Promise(function (resolve, reject) {
         var xhr = new XMLHttpRequest();
@@ -24,23 +25,25 @@ function makeRequest (method, url) {
         xhr.send();
     });
 }
-makeRequest('GET', 'https://www.eliftech.com/school-task')
-    .then(function (datums) {
-        console.log(datums);
-        var inputData = JSON.parse(datums);
-        console.log(inputData);
-        self.data.id = inputData.id;
-        var newExp = [];
-        for(var i=0; i<inputData.expressions.length; i++){
-            newExp.push(inputData.expressions[i].split(' '));
-        }
-        self.data.expressions = newExp;
-        calculateResult();
-        sendData();
-    })
-    .catch(function (err) {
-        console.error('Augh, there was an error!', err.statusText);
-    });
+function start() {
+    makeRequest('GET', 'https://www.eliftech.com/school-task')
+        .then(function (datums) {
+            console.log(datums);
+            var inputData = JSON.parse(datums);
+            console.log(inputData);
+            self.data.id = inputData.id;
+            var newExp = [];
+            for(var i=0; i<inputData.expressions.length; i++){
+                newExp.push(inputData.expressions[i].split(' '));
+            }
+            self.data.expressions = newExp;
+            calculateResult();
+            sendData();
+        })
+        .catch(function (err) {
+            console.error('Augh, there was an error!', err.statusText);
+        });
+}
 function sendData() {
     var xhttp = new XMLHttpRequest();
     xhttp.open('POST', 'https://www.eliftech.com/school-task');
